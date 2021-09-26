@@ -24,7 +24,7 @@ Thanks to https://github.com/mafikes/electron-websocket-express/
 ## TODOs
 
 - implement all button actions (tab, read)
-- better mobile interface, interface was first designed for desktop
+- show connection status in remote web app
 - use dynamically local ip
     - use ipc bridge for secure communication to get data for electron app frontend (see https://stackoverflow.com/a/59888788 and `src/_OLD`)
 - add secure key for more secure server <-> client connection

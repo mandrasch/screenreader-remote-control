@@ -10,7 +10,6 @@ let Connect = {
 
     start: function () {
         this.connection = new WebSocket('ws://' + this.ip_address + ':' + this.port);
-
         this.connection.onopen = function (e) {
             Connect.connection_status = true;
             console.log("Connection established!");

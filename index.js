@@ -6,6 +6,7 @@ const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const fs = require("fs");
 const applescript = require('applescript');
+const { contextIsolated } = require('process');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -24,7 +25,7 @@ const server = require('http').Server(_app);
 server.listen(Config.http_port);
 
 // WSS server
-const wss = new WebSocket.Server({port: Config.socket_port});
+const wss = new WebSocket.Server({ port: Config.socket_port });
 
 // Console print
 console.log('[SERVER]: WebSocket on: ' + myip.getLocalIP4() + ':' + Config.socket_port); // print websocket ip address
@@ -45,7 +46,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, '/electron-app/index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -76,7 +77,7 @@ app.on('activate', () => {
 /**
  * EXPRESS
  */
- _app.use(bodyParser.urlencoded({
+_app.use(bodyParser.urlencoded({
   extended: false
 }));
 
@@ -91,7 +92,7 @@ _app.get('/', function (req, res) {
 */
 wss.getUniqueID = function () {
   function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
 
   return s4() + s4() + '-' + s4();
@@ -103,34 +104,75 @@ wss.on('connection', function connection(ws, req) {
   ws.id = wss.getUniqueID();
 
   ws.on('close', function close() {
-      console.log('[SERVER]: Client disconnected.');
+    console.log('[SERVER]: Client disconnected.');
   });
 
-  ws.on('message', function incoming(receiveData) {
-      console.log('[SERVER] Message:', receiveData);
+  ws.on('message', function incoming(incomingData) {
+    console.log('[SERVER] Message:', incomingData.toString());
+    
+    incomingData = JSON.parse(incomingData.toString());
 
-      // TODO: differentiate messages
-      console.log('Got read next event, triggering it ...');
-      triggerActionRead();
+    let appleScriptCommand = '';
+  
+    if ("action" in incomingData) {
+      
+      // key codes https://eastmanreference.com/complete-list-of-applescript-key-codes
 
-      // Example use
-      // send(recieveData);
-      sendAll(receiveData);
+      switch (incomingData.action) {
+        case 'triggerActivateVoiceOver':
+          console.log('Try to activate voice over');
+          appleScriptCommand = 'tell application "System Events" to key code 96 using {command down}';
+          break;
+        case 'triggerFocusNext':
+          appleScriptCommand = 'tell application "System Events" to key code 48';
+          break;
+        case 'triggerFocusPrev':
+          appleScriptCommand = 'tell application "System Events" to key code 48 using {shift down}';
+          break;
+        case 'triggerEnter':
+          appleScriptCommand = 'tell application "System Events" to key code 76';
+          break;
+        case 'triggerReadNext':
+          appleScriptCommand =  'tell application "System Events" to key code 124 using {option down, control down}'
+          break;
+        case 'triggerReadPrev':
+          appleScriptCommand =  'tell application "System Events" to key code 123 using {option down, control down}'
+          break;
+        case 'triggerReadStop':
+          appleScriptCommand =  'tell application "System Events" to key code 59'
+          break;
+        default:
+          console.log('Error: unknown action', incomingData);
+          break;
+      }
+
+      applescript.execString(appleScriptCommand, (err, rtn) => {
+        if (err) {
+          // Something went wrong!
+          console.log('Error executing apple script command:', err);
+        }
+        console.log('Executed apple script command', rtn);
+      });
+    }
+    // Example use
+    // send(recieveData);
+    // sendAll(incomingData);
+    // TODO: return success?
   });
 
   // Send back to client
   function send(data) {
-      data = JSON.stringify(data);
-      ws.send(data);
+    data = JSON.stringify(data);
+    ws.send(data);
   }
 
   // Send to all clients
   function sendAll(data) {
-      data = JSON.stringify(data);
+    data = JSON.stringify(data);
 
-      wss.clients.forEach(function each(client) {
-          client.send(data);
-      });
+    wss.clients.forEach(function each(client) {
+      client.send(data);
+    });
   }
 });
 
@@ -139,19 +181,19 @@ wss.on('connection', function connection(ws, req) {
 * Shortcut actions for mac / voice over
 */
 
-let triggerActionRead = function(nextOrPrev){
+let triggerActionRead = function (nextOrPrev) {
 
   console.log('TRIGGER TO READ', nextOrPrev);
 
-  const script0 = 
-  'tell application "System Events" to key code 124 using {option down, control down}'
+  const script0 =
+    'tell application "System Events" to key code 124 using {option down, control down}'
 
   applescript.execString(script0, (err, rtn) => {
     if (err) {
       // Something went wrong!
-      console.log('error',err);
+      console.log('error', err);
     }
-    console.log('executed',rtn);
+    console.log('executed', rtn);
   });
 
   return;
@@ -162,24 +204,24 @@ let triggerActionRead = function(nextOrPrev){
 
   const script = 'tell application "System Events" to key code 48 using {command down}';
   // TAB
-  const script2 = 
-  'tell application "System Events" to key code 48';
-    // VO combination + Right Arrow
-  const script3 = 
-  'tell application "System Events" to key code 124 using {option down, control down}'
+  const script2 =
+    'tell application "System Events" to key code 48';
+  // VO combination + Right Arrow
+  const script3 =
+    'tell application "System Events" to key code 124 using {option down, control down}'
 
   applescript.execFile(path.join(__dirname, "/apple_scripts/read_whole_page.applescript"), (err, rtn) => {
     if (err) {
       // Something went wrong!
-      console.log('error',err);
+      console.log('error', err);
     }
-    console.log('executed',rtn);
+    console.log('executed', rtn);
   });
 }
 
 
 /*
-* IPC Bridge 
+* IPC Bridge
 */
 
 // TODO: send ip to electron-frontend
