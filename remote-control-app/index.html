@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- TODO: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+    <title>Screenreader remote control</title>
+
+    <!-- Font awesome 5 -->
+    <link href="/assets/css/fontawesome-free-web/css/all.css" rel="stylesheet" />
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="/assets/css/bulma/bulma.min.css" />
+    <!-- Fork of https://github.com/BulmaTemplates/bulma-templates -->
+    <link rel="stylesheet" href="/assets/css/landing.css" />
+    <!-- Improved creenreader only class -->
+    <link rel="stylesheet" href="/assets/css/improved-sr-only.css" />
+    <!-- Our styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+</head>
+
+<body>
+    <section class="hero is-info">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="../">
+                            Screenreader remote control
+                        </a>
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="">
+                                    <span class="icon">
+                                        <i class="fa fa-github"></i>
+                                    </span>
+                                    <span>Github</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="box box--bg-dark box--is-visible-after-website-opening box--align-items-center"
+                id="boxScreenreaderOutput">
+                Loading ..
+            </div>
+
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-12">
+                    <h1 class="title sr-only">
+                        Screenreader remote control
+                    </h1>
+
+                    <div class="box box--control-center content" id="boxControlCenter">
+
+                        <h1 class="title">
+                            Connecting to server...
+                        </h1>
+
+                        <p class="has-text-left">
+                            <label for="inputWebsiteUrl">Website URL:</label>
+                        </p>
+                        <div class="field has-addons">
+                            <p class="control is-expanded">
+                                <input class="input" type="url" id="inputWebsiteUrl"
+                                    value="https://dequeuniversity.com/library/aria/simple-dialog ">
+                            </p>
+                            <p class="control">
+                                <a class="button is-primary" id="btnOpenWebsite">
+                                    Open website
+                                </a>
+                            </p>
+                        </div>
+
+                        <h2>Mac / Voice Over</h2>
+
+                        <p>TODO: Buttons are not implemented yet.</p>
+
+                        <button id="btnActivateVoiceOver">Activate Voice Over</button>
+
+                        <h3>Focusable items</h3>
+                        <p class="is-size-7 has-text-justified">Tab through the interactive elements. In
+                            desktop screenreaders you
+                            normally use the TAB key for this. With Shift + TAB you get the previous
+                            element. This also works in web
+                            browsers, which is a great way of quickly testing accessibility issues. (<a
+                                class="external-link" href="https://www.matuzo.at/blog/testing-with-tab/"
+                                target="_blank"
+                                aria-label="One of my favourite accessibility testing tools: The Tab Key.">Read
+                                more</a>)</p>
+                        <div class="field">
+                            <p class="control">
+                                <button class="button" id="btnFocusPrev">
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-alt-circle-left"></i>
+                                    </span>
+                                    <span>Previous focusable</span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button" id="btnTriggerEnter">
+                                    <span>Enter</span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button" id="btnFocusNext">
+                                    <span>Next focusable</span>
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-alt-circle-right"></i>
+                                    </span>
+                                </button>
+                            </p>
+                        </div>
+                        <h3>Read elements</h3>
+                        <p class="is-size-7 has-text-justified"> This one is a little bit trickier. In NVDA you
+                            start
+                            reading elements with "Insert
+                            + &#8595;", VoiceOver uses "Configured VoiceOver shortcut combination + A".</p>
+                        <div class="field">
+                            <p class="control">
+                                <button class="button" id="btnReadPrev">
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-alt-circle-left"></i>
+                                    </span>
+                                    <span>Read previous element</span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button" id="btnStopReading">
+                                    <span>Stop</span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button" id="btnReadNext">
+                                    <span>Read next element</span>
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-alt-circle-right"></i>
+                                    </span>
+                                </button>
+                            </p>
+                        </div>
+                        <h3>Special actions</h3>
+                        <div class="field">
+                            TODO: List headings, Go to main landmark, Enter text in forms, Read whole
+                            document?
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/connect.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/custom.js"></script>
+</body>
+
+</html>
