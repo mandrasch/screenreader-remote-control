@@ -3,8 +3,8 @@
 
 Training / learning tool for web accessibility. Use your smartphone, tablet or another device as remote control for a screenreader. 
 
-
 State: Experimental, use with caution 
+
 Currently supported: Voice Over (Apple Mac)
 
 ## Demo
@@ -13,6 +13,7 @@ Currently supported: Voice Over (Apple Mac)
 
 ## Install / Run
 
+- npm install
 - npm start
 
 ## Built with
