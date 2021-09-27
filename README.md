@@ -47,4 +47,4 @@ Disclaimer: I'm an a11y newbie. I try to respect *Nothing About Us Without Us* a
 
 ## License
 
-My own scripts are available as CC0 (https://creativecommons.org/publicdomain/zero/1.0/deed.de). Please see package.json for a list of Open Source Libraries used (and their respective license). I'll provide a LICENSE and CREDITS file in future.
+My own scripts are available as CC0 / Public Domain (https://creativecommons.org/publicdomain/zero/1.0/deed.en). Please see package.json for a list of Open Source Libraries used (and their respective license). I'll provide a LICENSE and CREDITS file in future.
