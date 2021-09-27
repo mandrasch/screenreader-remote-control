@@ -119,9 +119,23 @@ wss.on('connection', function connection(ws, req) {
       // key codes https://eastmanreference.com/complete-list-of-applescript-key-codes
 
       switch (incomingData.action) {
+        case 'triggerOpenExampleWebsite':
+
+          applescript.execFile(path.join(__dirname, "/apple-scripts/open_example_website.applescript"), (err, rtn) => {
+            if (err) {
+              // Something went wrong!
+              console.log('error', err);
+            }
+            console.log('executed', rtn);
+          });
+          //appleScriptCommand = 'tell application "Safari" to open location "https://www.gov.uk/"'; // does not activate it
+          break;
         case 'triggerActivateVoiceOver':
-          console.log('Try to activate voice over');
           appleScriptCommand = 'tell application "System Events" to key code 96 using {command down}';
+          break;
+        case 'triggerGoIntoWebContentArea':
+          // VO + SHIFT + down arrow
+          appleScriptCommand = 'tell application "System Events" to key code {57, 124} using {option down, control down}';
           break;
         case 'triggerFocusNext':
           appleScriptCommand = 'tell application "System Events" to key code 48';
@@ -132,14 +146,22 @@ wss.on('connection', function connection(ws, req) {
         case 'triggerEnter':
           appleScriptCommand = 'tell application "System Events" to key code 76';
           break;
+        case 'triggerReadStart':
+          // VO + A
+          appleScriptCommand =  'tell application "System Events" to key code 0 using {option down, control down}';
+          break;
         case 'triggerReadNext':
-          appleScriptCommand =  'tell application "System Events" to key code 124 using {option down, control down}'
+          appleScriptCommand =  'tell application "System Events" to key code 124 using {option down, control down}';
           break;
         case 'triggerReadPrev':
-          appleScriptCommand =  'tell application "System Events" to key code 123 using {option down, control down}'
+          appleScriptCommand =  'tell application "System Events" to key code 123 using {option down, control down}';
           break;
         case 'triggerReadStop':
-          appleScriptCommand =  'tell application "System Events" to key code 59'
+          appleScriptCommand =  'tell application "System Events" to key code 59';
+          break;
+        case 'triggerJumpToTop':
+          // VO + Fn + Left Arrow
+          appleScriptCommand =  'tell application "System Events" to key code { 123 , 63} using {option down, control down}';
           break;
         default:
           console.log('Error: unknown action', incomingData);

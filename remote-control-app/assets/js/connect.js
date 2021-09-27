@@ -4,8 +4,7 @@
 let Connect = {
     connection: null,
     connection_status: false,
-    // TODO: Get this dynamically via ipc bridge
-    ip_address: '192.168.188.38', // edit by yours
+    ip_address: window.location.hostname,
     port: '3030', // port
 
     start: function () {

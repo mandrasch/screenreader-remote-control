@@ -4,14 +4,17 @@ $(function () {
     Connect.start();
 });
 
-const btnOpenWebsite = document.getElementById('btnOpenWebsite');
+const btnOpenExampleWebsite = document.getElementById('btnOpenExampleWebsite');
 const btnActivateVoiceOver = document.getElementById('btnActivateVoiceOver');
+const btnGoIntoWebContentArea = document.getElementById('btnGoIntoWebContentArea');
+const btnReadStart = document.getElementById('btnReadStart');
 const btnReadNext = document.getElementById('btnReadNext');
 const btnReadPrev = document.getElementById('btnReadPrev');
 const btnFocusdNext = document.getElementById('btnReadNext');
 const btnFocusPrev = document.getElementById('btnFocusPrev');
 const btnReadStop = document.getElementById('btnReadStop');
 const btnEnter = document.getElementById('btnEnter');
+const btnJumpToTop = document.getElementById('btnJumpToTop');
 
 /*btnOpenWebsite.addEventListener('click', function () {
 
@@ -31,6 +34,16 @@ const btnEnter = document.getElementById('btnEnter');
     });
 
 }, false);*/
+btnGoIntoWebContentArea.addEventListener('click',function(){
+    Connect.sendMessage({
+        'action': 'triggerGoIntoWebContentArea'
+    });
+},false);
+btnOpenExampleWebsite.addEventListener('click',function(){
+    Connect.sendMessage({
+        'action': 'triggerOpenExampleWebsite'
+    });
+},false);
 btnActivateVoiceOver.addEventListener('click',function(){
     Connect.sendMessage({
         'action': 'triggerActivateVoiceOver'
@@ -51,6 +64,11 @@ btnEnter.addEventListener('click',function(){
         'action': 'triggerEnter'
     });
 },false);
+btnReadStart.addEventListener('click',function(){
+    Connect.sendMessage({
+        'action': 'triggerReadStart'
+    });
+},false);
 btnReadNext.addEventListener('click',function(){
     Connect.sendMessage({
         'action': 'triggerReadNext'
@@ -64,6 +82,11 @@ btnReadPrev.addEventListener('click',function(){
 btnReadStop.addEventListener('click',function(){
     Connect.sendMessage({
         'action': 'triggerReadStop'
+    });
+},false);
+btnJumpToTop.addEventListener('click',function(){
+    Connect.sendMessage({
+        'action': 'triggerJumpToTop'
     });
 },false);
 

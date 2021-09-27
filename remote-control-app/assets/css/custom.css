@@ -1,25 +1,37 @@
-
 /* colors & contracts */
-.navbar-burger{
-    color:white;
+.navbar-burger {
+    color: white;
 }
-.button.is-primary{
-    color:black;
+
+.button.is-primary {
+    color: black;
 }
-span.is-warning{
-    color:red;
+
+span.is-warning {
+    color: red;
 }
 
 /* links */
-.content a{
+.content a {
     text-decoration: underline;
 }
 
-.section{
-    line-height:1.3rem;
+.section {
+    line-height: 1.3rem;
 }
 
-.button{
-    margin-top:5px;
-    margin-bottom:5px;
+.button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.section__controls__large-button-group .button{
+    height: 6rem;
+    font-size: 4rem;
+    width: 3rem;
+}
+
+.section__controls__large-button-group .button .icon{
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
