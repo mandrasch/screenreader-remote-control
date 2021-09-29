@@ -11,7 +11,11 @@ Currently supported: Voice Over (Apple Mac)
 
 🎥   Demo video: https://www.youtube.com/watch?v=sZCS_kytKj0
 
-## Install / Run
+## Download
+
+- coming soon
+
+## Install / Run (Development)
 
 - npm install
 - npm start
