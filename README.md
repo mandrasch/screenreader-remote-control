@@ -11,14 +11,21 @@ Currently supported: Voice Over (Apple Mac)
 
 🎥  https://www.youtube.com/watch?v=sZCS_kytKj0
 
-## Download
-
-- coming soon
-
-## Install / Run (Development)
+## Install / Run
 
 - npm install
 - npm start
+
+## Build
+
+Locally: `npm run make`
+
+Increase version via npm, build on GitHub action for all OS:
+
+- npm version minor
+- git push --follow-tags
+
+See: https://dev.to/erikhofer/build-and-publish-a-multi-platform-electron-app-on-github-3lnd
 
 ## Built with
 
@@ -32,6 +39,7 @@ Thanks to https://github.com/mafikes/electron-websocket-express/
 
 ## TODOs / ideas
 
+- [ ] add SvelteKit via https://github.com/FractalHQ/sveltekit-electron or https://github.com/Dax89/electron-sveltekit
 - implement start/stop websocket server
 - add github pipeline, test dmg for mac (permissions must be given?)
 - ! show local ip as qr code in electron app
