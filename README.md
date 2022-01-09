@@ -7,9 +7,9 @@ State: Experimental, use with caution
 
 Currently supported: Voice Over (Apple Mac)
 
-## Demo
+## Demo video: 
 
-🎥   Demo video: https://www.youtube.com/watch?v=sZCS_kytKj0
+🎥  https://www.youtube.com/watch?v=sZCS_kytKj0
 
 ## Install / Run
 
