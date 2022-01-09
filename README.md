@@ -20,7 +20,7 @@ Currently supported: Voice Over (Apple Mac)
 
 Locally: `npm run make`
 
-Increase version via npm, build on GitHub action for all OS:
+Bump version number via npm, new tag is create automatically and pushing the tag will trigger a build on GitHub action:
 
 - npm version minor
 - git push --follow-tags
